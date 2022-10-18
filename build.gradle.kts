@@ -16,7 +16,7 @@ repositories {
 dependencies {
     implementation(kotlin("reflect"))
 
-    val flinkVersion = "1.15.1"
+    val flinkVersion = "1.15.2"
     implementation("org.apache.flink:flink-java:$flinkVersion")
 
     testImplementation("org.apache.flink:flink-test-utils-junit:$flinkVersion")
