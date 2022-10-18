@@ -19,7 +19,7 @@ dependencies {
     val flinkVersion = "1.15.2"
     implementation("org.apache.flink:flink-java:$flinkVersion")
 
-    testImplementation("org.apache.flink:flink-test-utils-junit:$flinkVersion")
+    testImplementation("org.apache.flink:flink-test-utils:$flinkVersion")
     testImplementation("org.apache.flink:flink-core:$flinkVersion:tests")
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
