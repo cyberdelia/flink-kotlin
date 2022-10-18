@@ -16,10 +16,11 @@ repositories {
 dependencies {
     implementation(kotlin("reflect"))
 
-    implementation("org.apache.flink:flink-core:1.13.2")
-    implementation("org.apache.flink:flink-core:1.13.2:tests")
-    implementation("org.apache.flink:flink-test-utils-junit:1.13.2")
+    val flinkVersion = "1.15.1"
+    implementation("org.apache.flink:flink-java:$flinkVersion")
 
+    testImplementation("org.apache.flink:flink-test-utils-junit:$flinkVersion")
+    testImplementation("org.apache.flink:flink-core:$flinkVersion:tests")
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.junit.vintage:junit-vintage-engine")
