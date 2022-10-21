@@ -1,6 +1,36 @@
 # Kotlin support for Apache Flink
 
+This package provides a type information specific to kotlin data classes (including `Pair` and `Triple`).
+
 ## Usage
+
+### TypeInformation
+
+Using the `createTypeInformation` that will return a Kotlin friendly `TypeInformation` for data classes, collections,
+maps, etc:
+
+```kotlin
+dataStream.process(
+    processFunction(),
+    createTypeInformation<Row>()
+)
+```
+
+It also supports fields name in the definition of keys, i.e. you will be able to use name of fields directly:
+
+```kotlin
+dataStream.join(another).where("name").equalTo("personName")
+```
+
+You can also annotate your data classes with the `@TypeInfo` annotation:
+
+```kotlin
+@TypeInfo(DataClassTypeInfoFactory::class)
+data class Record(
+    val name: String,
+    val value: Long
+)
+```
 
 ## Schema evolution
 
