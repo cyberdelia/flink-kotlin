@@ -1,0 +1,14 @@
+# Kotlin support for Apache Flink
+
+## Usage
+
+## Schema evolution
+
+Schema evolution for data classes follow this set of rules:
+
+1. Fields can be removed. Once removed, the previous value for the removed field will be dropped in future checkpoints and savepoints.
+2. New fields can be added. The new field will be initialized to the default value for its type, as defined by Java.
+3. Declared fields types cannot change.
+4. Class name of type cannot change, including the namespace of the class.
+5. Null fields are not supported.
+
