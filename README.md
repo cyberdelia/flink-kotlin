@@ -1,10 +1,13 @@
 # Kotlin support for Apache Flink
 
-This package provides a type information specific to kotlin data classes (including `Pair` and `Triple`).
+This package provides type information and specialized type serializers for kotlin data classes (including `Pair`
+and `Triple`), as well as for Kotlin `Map` and `Collection` types.
 
 ## Installation
 
-The package is available in [Github](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-gradle-registry#using-a-published-package), using Gradle:
+The package is available
+in [Github](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-gradle-registry#using-a-published-package),
+using Gradle:
 
 ```kotlin
 implementation("com.lapanthere:flink-kotlin:0.1.0")
@@ -44,7 +47,8 @@ data class Record(
 
 Schema evolution for data classes follow this set of rules:
 
-1. Fields can be removed. Once removed, the previous value for the removed field will be dropped in future checkpoints and savepoints.
+1. Fields can be removed. Once removed, the previous value for the removed field will be dropped in future checkpoints
+   and savepoints.
 2. New fields can be added. The new field will be initialized to the default value for its type, as defined by Java.
 3. Declared fields types cannot change.
 4. Class name of type cannot change, including the namespace of the class.
