@@ -1,7 +1,8 @@
 # Kotlin support for Apache Flink
 
-This package provides type information and specialized type serializers for kotlin data classes (including `Pair`
-and `Triple`), as well as for Kotlin `Map` and `Collection` types.
+This package provides type information and
+specialized [type serializers](https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/dev/datastream/fault-tolerance/serialization/types_serialization/)
+for kotlin data classes (including `Pair` and `Triple`), as well as for Kotlin `Map` and `Collection` types.
 
 ## Installation
 
