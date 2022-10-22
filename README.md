@@ -2,6 +2,14 @@
 
 This package provides a type information specific to kotlin data classes (including `Pair` and `Triple`).
 
+## Installation
+
+The package is available in [Github](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-gradle-registry#using-a-published-package), using Gradle:
+
+```
+implementation("com.lapanthere:flink-kotlin:0.1.0")
+```
+
 ## Usage
 
 ### TypeInformation
