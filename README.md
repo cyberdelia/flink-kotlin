@@ -6,7 +6,7 @@ This package provides a type information specific to kotlin data classes (includ
 
 The package is available in [Github](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-gradle-registry#using-a-published-package), using Gradle:
 
-```
+```kotlin
 implementation("com.lapanthere:flink-kotlin:0.1.0")
 ```
 
