@@ -6,7 +6,7 @@ for kotlin data classes (including `Pair` and `Triple`), as well as for Kotlin `
 
 ## Installation
 
-The package is available on [Maven Central](https://search.maven.org/search?q=g:com.lapanthere%20AND%20a:flink-kotlin).
+The package is available on [Maven Central](https://search.maven.org/search?q=g:com.lapanthere%20AND%20a:flink-kotlin)
 and [Github](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-gradle-registry#using-a-published-package),
 using Gradle:
 
