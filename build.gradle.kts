@@ -2,6 +2,7 @@ plugins {
     kotlin("jvm") version "1.7.22"
     `java-library`
     `maven-publish`
+    signing
 
     id("org.jmailen.kotlinter") version "3.12.0"
     id("org.jetbrains.dokka") version "1.7.20"
@@ -63,6 +64,19 @@ publishing {
                     connection.set("scm:git:git://github.com/cyberdelia/flink-kotlin.git")
                     developerConnection.set("scm:git:ssh://github.com/cyberdelia/flink-kotlin.git")
                     url.set("https://github.com/cyberdelia/flink-kotlin")
+                }
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        url.set("http://www.opensource.org/licenses/mit-license.php")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("cyberdelia")
+                        name.set("Timothée Peignier")
+                        email.set("tim@lapanthere.com")
+                    }
                 }
             }
         }
