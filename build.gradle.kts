@@ -14,10 +14,6 @@ repositories {
     mavenCentral()
 }
 
-signing {
-    sign(publishing.publications)
-}
-
 dependencies {
     implementation(kotlin("reflect"))
 
@@ -74,6 +70,7 @@ publishing {
         create<MavenPublication>("default") {
             from(components["java"])
             artifact(tasks["sourcesJar"])
+            artifact(tasks["javadocJar"])
             pom {
                 name.set("flink-kotlin")
                 description.set("Kotlin extensions for Apache Flink")
@@ -94,9 +91,16 @@ publishing {
                         id.set("cyberdelia")
                         name.set("Timothée Peignier")
                         email.set("tim@lapanthere.com")
+                        organization.set("La Panthère")
+                        organizationUrl.set("https://lapanthere.com")
                     }
                 }
             }
         }
     }
+}
+
+signing {
+    useGpgCmd()
+    sign(publishing.publications)
 }
