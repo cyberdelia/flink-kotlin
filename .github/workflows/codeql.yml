@@ -32,7 +32,7 @@ jobs:
         java-version: '11'
         cache: 'gradle'
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew assemble
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
       with:
