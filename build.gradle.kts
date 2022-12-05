@@ -101,6 +101,9 @@ publishing {
 }
 
 signing {
-    useGpgCmd()
+    useInMemoryPgpKeys(
+        System.getenv("GPG_PRIVATE_KEY"),
+        System.getenv("GPG_PASSPHRASE")
+    )
     sign(publishing.publications)
 }
