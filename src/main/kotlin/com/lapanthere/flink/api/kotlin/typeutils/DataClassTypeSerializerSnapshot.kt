@@ -35,7 +35,7 @@ public class DataClassTypeSerializerSnapshot<T : Any> :
     override fun readOuterSnapshot(
         readOuterSnapshotVersion: Int,
         `in`: DataInputView,
-        userCodeClassLoader: ClassLoader
+        userCodeClassLoader: ClassLoader,
     ) {
         type = InstantiationUtil.resolveClassByName(`in`, userCodeClassLoader)
     }

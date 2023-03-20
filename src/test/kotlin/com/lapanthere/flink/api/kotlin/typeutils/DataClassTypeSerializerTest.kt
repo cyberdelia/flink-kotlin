@@ -21,7 +21,7 @@ internal class DataClassTypeSerializerTest : AbstractDataClassTypeSerializerTest
 
     override fun getTestData(): Array<DataClass> = arrayOf(
         DataClass("string", 1, Nested("string")),
-        DataClass("string", 123, Nested("123"))
+        DataClass("string", 123, Nested("123")),
     )
 }
 
@@ -30,7 +30,7 @@ internal class ParameterizedTypeSerializerTest : AbstractDataClassTypeSerializer
 
     override fun getTestData(): Array<ParameterizedClass<Int>> = arrayOf(
         ParameterizedClass("string", 1),
-        ParameterizedClass("string", 4)
+        ParameterizedClass("string", 4),
     )
 }
 
@@ -39,7 +39,7 @@ internal class OrderTypeSerializerTest : AbstractDataClassTypeSerializerTest<Ord
 
     override fun getTestData(): Array<Order> = arrayOf(
         Order(Purchase(2.0), Purchase(1.0)),
-        Order(Purchase(20.0), Purchase(15.0))
+        Order(Purchase(20.0), Purchase(15.0)),
     )
 }
 
@@ -48,7 +48,7 @@ internal class PairTypeSerializerTest : AbstractDataClassTypeSerializerTest<Pair
 
     override fun getTestData(): Array<Pair<String, Int>> = arrayOf(
         Pair("Hello", 1),
-        Pair("World", 2)
+        Pair("World", 2),
     )
 }
 
@@ -57,6 +57,6 @@ internal class TripleTypeSerializerTest : AbstractDataClassTypeSerializerTest<Tr
 
     override fun getTestData(): Array<Triple<String, String, Int>> = arrayOf(
         Triple("Hello", "World", 1),
-        Triple("Super", "Mario", 2)
+        Triple("Super", "Mario", 2),
     )
 }

@@ -15,7 +15,7 @@ internal class ExampleTest {
             MiniClusterResourceConfiguration.Builder()
                 .setNumberSlotsPerTaskManager(2)
                 .setNumberTaskManagers(1)
-                .build()
+                .build(),
         )
 
         @JvmStatic

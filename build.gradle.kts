@@ -4,7 +4,7 @@ plugins {
     `maven-publish`
     signing
 
-    id("org.jmailen.kotlinter") version "3.13.0"
+    id("org.jmailen.kotlinter") version "3.14.0"
     id("org.jetbrains.dokka") version "1.8.10"
 }
 
@@ -40,10 +40,6 @@ tasks.register<Jar>("javadocJar") {
 
 kotlin {
     explicitApi()
-}
-
-kotlinter {
-    disabledRules = arrayOf("import-ordering")
 }
 
 publishing {

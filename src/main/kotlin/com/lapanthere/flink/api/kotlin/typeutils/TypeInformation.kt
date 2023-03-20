@@ -25,7 +25,7 @@ public fun createTypeInformation(type: KType): TypeInformation<*> {
                 klass.java,
                 mapping.map { (key, value) -> key.javaType.typeName to createTypeInformation(value) }.toMap(),
                 parameters.map { createTypeInformation(it) }.toTypedArray(),
-                fields.map { it.name!! }.toTypedArray()
+                fields.map { it.name!! }.toTypedArray(),
             )
         }
         klass.isSubclassOf(Map::class) -> {

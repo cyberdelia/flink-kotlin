@@ -21,7 +21,7 @@ public class DataClassTypeInformation<T : Any>(
     private val klass: Class<T>,
     private val typeParameters: Map<String, TypeInformation<*>>,
     kotlinFieldTypes: Array<TypeInformation<*>>,
-    private val kotlinFieldNames: Array<String>
+    private val kotlinFieldNames: Array<String>,
 ) : TupleTypeInfoBase<T>(klass, *kotlinFieldTypes) {
     override fun toString(): String = buildString {
         append(klass.simpleName)
@@ -44,7 +44,7 @@ public class DataClassTypeInformation<T : Any>(
     override fun createSerializer(config: ExecutionConfig): TypeSerializer<T> =
         DataClassTypeSerializer(
             klass,
-            types.take(arity).map { it.createSerializer(config) }.toTypedArray()
+            types.take(arity).map { it.createSerializer(config) }.toTypedArray(),
         )
 
     override fun createTypeComparatorBuilder(): TypeComparatorBuilder<T> = DataClassTypeComparatorBuilder()
@@ -56,7 +56,7 @@ public class DataClassTypeInformation<T : Any>(
     override fun getFlatFields(
         fieldExpression: String,
         offset: Int,
-        result: MutableList<FlatFieldDescriptor>
+        result: MutableList<FlatFieldDescriptor>,
     ) {
         val match = PATTERN_NESTED_FIELDS_WILDCARD.matchEntire(fieldExpression)
             ?: throw InvalidFieldReferenceException("""Invalid tuple field reference "$fieldExpression".""")
@@ -159,7 +159,7 @@ public class DataClassTypeInformation<T : Any>(
         override fun createTypeComparator(config: ExecutionConfig): TypeComparator<T> = DataClassTypeComparator(
             logicalKeyFields.toIntArray(),
             fieldComparators.toTypedArray(),
-            types.take(logicalKeyFields.max() + 1).map { it.createSerializer(config) }.toTypedArray()
+            types.take(logicalKeyFields.max() + 1).map { it.createSerializer(config) }.toTypedArray(),
         )
     }
 }

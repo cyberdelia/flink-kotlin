@@ -10,11 +10,11 @@ import kotlin.reflect.full.primaryConstructor
 
 public class DataClassTypeSerializer<T : Any>(
     type: Class<T>?,
-    fieldSerializers: Array<TypeSerializer<*>>
+    fieldSerializers: Array<TypeSerializer<*>>,
 ) : TupleSerializerBase<T>(type, fieldSerializers) {
     override fun duplicate(): TypeSerializer<T> = DataClassTypeSerializer(
         tupleClass,
-        fieldSerializers.map { it.duplicate() }.toTypedArray()
+        fieldSerializers.map { it.duplicate() }.toTypedArray(),
     )
 
     override fun createInstance(fields: Array<out Any?>): T? = try {
@@ -49,7 +49,7 @@ public class DataClassTypeSerializer<T : Any>(
         createInstance(
             fieldSerializers.mapIndexed { i, serializer ->
                 serializer.copy(from.component(i))
-            }.toTypedArray()
+            }.toTypedArray(),
         )
     }
 }

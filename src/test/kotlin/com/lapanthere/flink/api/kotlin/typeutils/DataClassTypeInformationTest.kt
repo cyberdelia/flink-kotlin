@@ -8,6 +8,6 @@ internal class DataClassTypeInformationTest : TypeInformationTestBase<DataClassT
         createTypeInformation<Order>() as DataClassTypeInformation<Order>,
         createTypeInformation<ParameterizedClass<Int>>() as DataClassTypeInformation<ParameterizedClass<Int>>,
         createTypeInformation<Pair<String, Int>>() as DataClassTypeInformation<Pair<String, Int>>,
-        createTypeInformation<Triple<String, String, Int>>() as DataClassTypeInformation<Triple<String, String, Int>>
+        createTypeInformation<Triple<String, String, Int>>() as DataClassTypeInformation<Triple<String, String, Int>>,
     )
 }

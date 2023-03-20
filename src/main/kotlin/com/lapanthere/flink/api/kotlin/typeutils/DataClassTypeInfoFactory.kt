@@ -10,7 +10,7 @@ public class DataClassTypeInfoFactory<T : Any> : TypeInfoFactory<T>() {
     @Suppress("UNCHECKED_CAST")
     override fun createTypeInfo(
         t: Type,
-        genericParameters: Map<String, TypeInformation<*>>
+        genericParameters: Map<String, TypeInformation<*>>,
     ): TypeInformation<T>? {
         val klass = TypeExtractionUtils.typeToClass<T>(t).kotlin
         if (!klass.isData) {
