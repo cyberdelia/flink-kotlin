@@ -12,7 +12,7 @@ data class Word(
     val date: Date,
     val someFloat: Float = 0f,
     var nothing: Any,
-    val collection: List<String> = emptyList()
+    val collection: List<String> = emptyList(),
 )
 
 @TypeInfo(DataClassTypeInfoFactory::class)
@@ -28,14 +28,14 @@ data class ParameterizedClass<T>(val name: String, val field: T)
 
 @TypeInfo(DataClassTypeInfoFactory::class)
 data class Nested(
-    val string: String
+    val string: String,
 ) : Serializable
 
 @TypeInfo(DataClassTypeInfoFactory::class)
 data class DataClass(
     val string: String,
     val long: Long,
-    val nested: Nested
+    val nested: Nested,
 ) : Serializable
 
 data class Purchase(val amount: Double)

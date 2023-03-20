@@ -21,7 +21,7 @@ internal class DataClassTypeComparatorTest : ComparatorTestBase<DataClass>() {
             keys.computeLogicalKeyPositions(),
             orders,
             0,
-            ExecutionConfig()
+            ExecutionConfig(),
         )
     }
 
@@ -30,6 +30,6 @@ internal class DataClassTypeComparatorTest : ComparatorTestBase<DataClass>() {
     override fun getSortedTestData(): Array<DataClass> = arrayOf(
         DataClass("abc", 1, Nested("abc")),
         DataClass("def", 2, Nested("def")),
-        DataClass("xyz", 3, Nested("xyz"))
+        DataClass("xyz", 3, Nested("xyz")),
     )
 }

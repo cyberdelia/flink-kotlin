@@ -9,7 +9,7 @@ import org.apache.flink.types.NullKeyFieldException
 internal class DataClassTypeComparator<T>(
     keys: IntArray,
     comparators: Array<TypeComparator<*>>,
-    serializers: Array<TypeSerializer<*>>
+    serializers: Array<TypeSerializer<*>>,
 ) : TupleComparatorBase<T>(keys, comparators, serializers) {
     override fun hash(record: T?): Int {
         val code = comparators.first().hash(record?.component(0))
