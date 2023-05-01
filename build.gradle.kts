@@ -22,7 +22,7 @@ dependencies {
 
     testImplementation("org.apache.flink:flink-test-utils:$flinkVersion")
     testImplementation("org.apache.flink:flink-core:$flinkVersion:tests")
-    testImplementation(platform("org.junit:junit-bom:5.9.2"))
+    testImplementation(platform("org.junit:junit-bom:5.9.3"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.junit.vintage:junit-vintage-engine")
 }
