@@ -40,5 +40,4 @@ public fun createTypeInformation(type: KType): TypeInformation<*> {
 }
 
 @Suppress("UNCHECKED_CAST")
-public inline fun <reified T : Any> createTypeInformation(): TypeInformation<T> =
-    createTypeInformation(typeOf<T>()) as TypeInformation<T>
+public inline fun <reified T : Any> createTypeInformation(): TypeInformation<T> = createTypeInformation(typeOf<T>()) as TypeInformation<T>

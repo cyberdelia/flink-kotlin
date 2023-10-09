@@ -27,9 +27,10 @@ internal class DataClassTypeComparatorTest : ComparatorTestBase<DataClass>() {
 
     override fun createSerializer(): TypeSerializer<DataClass> = type.createSerializer(ExecutionConfig())
 
-    override fun getSortedTestData(): Array<DataClass> = arrayOf(
-        DataClass("abc", 1, Nested("abc")),
-        DataClass("def", 2, Nested("def")),
-        DataClass("xyz", 3, Nested("xyz")),
-    )
+    override fun getSortedTestData(): Array<DataClass> =
+        arrayOf(
+            DataClass("abc", 1, Nested("abc")),
+            DataClass("def", 2, Nested("def")),
+            DataClass("xyz", 3, Nested("xyz")),
+        )
 }
