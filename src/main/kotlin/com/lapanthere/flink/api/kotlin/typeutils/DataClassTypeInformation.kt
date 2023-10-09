@@ -23,18 +23,21 @@ public class DataClassTypeInformation<T : Any>(
     kotlinFieldTypes: Array<TypeInformation<*>>,
     private val kotlinFieldNames: Array<String>,
 ) : TupleTypeInfoBase<T>(klass, *kotlinFieldTypes) {
-    override fun toString(): String = buildString {
-        append(klass.simpleName)
-        if (types.isNotEmpty()) {
-            append(types.joinToString(", ", "<", ">"))
+    override fun toString(): String =
+        buildString {
+            append(klass.simpleName)
+            if (types.isNotEmpty()) {
+                append(types.joinToString(", ", "<", ">"))
+            }
         }
-    }
 
-    public override fun equals(other: Any?): Boolean = when (other) {
-        is DataClassTypeInformation<*> -> other.canEqual(this) && super.equals(other) &&
-            genericParameters == other.genericParameters && fieldNames.contentEquals(other.fieldNames)
-        else -> false
-    }
+    public override fun equals(other: Any?): Boolean =
+        when (other) {
+            is DataClassTypeInformation<*> ->
+                other.canEqual(this) && super.equals(other) &&
+                    genericParameters == other.genericParameters && fieldNames.contentEquals(other.fieldNames)
+            else -> false
+        }
 
     public override fun canEqual(obj: Any): Boolean = obj is DataClassTypeInformation<*>
 
@@ -58,8 +61,9 @@ public class DataClassTypeInformation<T : Any>(
         offset: Int,
         result: MutableList<FlatFieldDescriptor>,
     ) {
-        val match = PATTERN_NESTED_FIELDS_WILDCARD.matchEntire(fieldExpression)
-            ?: throw InvalidFieldReferenceException("""Invalid tuple field reference "$fieldExpression".""")
+        val match =
+            PATTERN_NESTED_FIELDS_WILDCARD.matchEntire(fieldExpression)
+                ?: throw InvalidFieldReferenceException("""Invalid tuple field reference "$fieldExpression".""")
         var field = match.groups[0]?.value!!
         if (field == Keys.ExpressionKeys.SELECT_ALL_CHAR) {
             var keyPosition = 0
@@ -82,7 +86,10 @@ public class DataClassTypeInformation<T : Any>(
 
             val tail = match.groups[3]?.value
             if (tail == null) {
-                fun extractFlatFields(index: Int, pos: Int) {
+                fun extractFlatFields(
+                    index: Int,
+                    pos: Int,
+                ) {
                     if (index >= fieldNames.size) {
                         throw InvalidFieldReferenceException("""Unable to find field "$field" in type "$this".""")
                     } else if (field == fieldNames[index]) {
@@ -96,13 +103,18 @@ public class DataClassTypeInformation<T : Any>(
                 }
                 extractFlatFields(0, offset)
             } else {
-                fun extractFlatFields(index: Int, pos: Int) {
+                fun extractFlatFields(
+                    index: Int,
+                    pos: Int,
+                ) {
                     if (index >= fieldNames.size) {
                         throw InvalidFieldReferenceException("""Unable to find field "$field" in type "$this".""")
                     } else if (field == fieldNames[index]) {
                         when (val fieldType = fieldTypes[index]) {
                             is CompositeType<*> -> fieldType.getFlatFields(tail, pos, result)
-                            else -> throw InvalidFieldReferenceException("""Nested field expression "$tail" not possible on atomic type "$fieldType".""")
+                            else -> throw InvalidFieldReferenceException(
+                                """Nested field expression "$tail" not possible on atomic type "$fieldType".""",
+                            )
                         }
                     } else {
                         extractFlatFields(index + 1, pos + fieldTypes[index].totalFields)
@@ -114,12 +126,13 @@ public class DataClassTypeInformation<T : Any>(
     }
 
     override fun <X : Any?> getTypeAt(fieldExpression: String): TypeInformation<X> {
-        val match = PATTERN_NESTED_FIELDS.matchEntire(fieldExpression)
-            ?: if (fieldExpression.startsWith(Keys.ExpressionKeys.SELECT_ALL_CHAR)) {
-                throw InvalidFieldReferenceException("Wildcard expressions are not allowed here.")
-            } else {
-                throw InvalidFieldReferenceException("""Invalid format of data class field expression "$fieldExpression".""")
-            }
+        val match =
+            PATTERN_NESTED_FIELDS.matchEntire(fieldExpression)
+                ?: if (fieldExpression.startsWith(Keys.ExpressionKeys.SELECT_ALL_CHAR)) {
+                    throw InvalidFieldReferenceException("Wildcard expressions are not allowed here.")
+                } else {
+                    throw InvalidFieldReferenceException("""Invalid format of data class field expression "$fieldExpression".""")
+                }
 
         var field = match.groups[1]?.value!!
         val tail = match.groups[3]?.value
@@ -135,7 +148,9 @@ public class DataClassTypeInformation<T : Any>(
                 } else {
                     when (fieldType) {
                         is CompositeType<*> -> fieldType.getTypeAt(i)
-                        else -> throw InvalidFieldReferenceException("""Nested field expression "$tail" not possible on atomic type "$fieldType".""")
+                        else -> throw InvalidFieldReferenceException(
+                            """Nested field expression "$tail" not possible on atomic type "$fieldType".""",
+                        )
                     }
                 }
             }
@@ -151,15 +166,19 @@ public class DataClassTypeInformation<T : Any>(
 
         override fun initializeTypeComparatorBuilder(size: Int) {}
 
-        override fun addComparatorField(fieldId: Int, comparator: TypeComparator<*>) {
+        override fun addComparatorField(
+            fieldId: Int,
+            comparator: TypeComparator<*>,
+        ) {
             fieldComparators += comparator
             logicalKeyFields += fieldId
         }
 
-        override fun createTypeComparator(config: ExecutionConfig): TypeComparator<T> = DataClassTypeComparator(
-            logicalKeyFields.toIntArray(),
-            fieldComparators.toTypedArray(),
-            types.take(logicalKeyFields.max() + 1).map { it.createSerializer(config) }.toTypedArray(),
-        )
+        override fun createTypeComparator(config: ExecutionConfig): TypeComparator<T> =
+            DataClassTypeComparator(
+                logicalKeyFields.toIntArray(),
+                fieldComparators.toTypedArray(),
+                types.take(logicalKeyFields.max() + 1).map { it.createSerializer(config) }.toTypedArray(),
+            )
     }
 }

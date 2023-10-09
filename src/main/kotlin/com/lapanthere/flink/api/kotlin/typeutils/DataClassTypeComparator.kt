@@ -42,7 +42,10 @@ internal class DataClassTypeComparator<T>(
             }
         }
 
-    override fun compare(first: T?, second: T?): Int {
+    override fun compare(
+        first: T?,
+        second: T?,
+    ): Int {
         keyPositions.zip(comparators).forEach { (position, comparator) ->
             try {
                 val cmp = comparator.compare(first?.component(position), second?.component(position))
@@ -56,7 +59,12 @@ internal class DataClassTypeComparator<T>(
         return 0
     }
 
-    override fun putNormalizedKey(record: T?, target: MemorySegment, offset: Int, numBytes: Int) {
+    override fun putNormalizedKey(
+        record: T?,
+        target: MemorySegment,
+        offset: Int,
+        numBytes: Int,
+    ) {
         var localNumBytes = numBytes
         var localOffset = offset
         var i = 0
@@ -82,7 +90,11 @@ internal class DataClassTypeComparator<T>(
         return comparator
     }
 
-    override fun extractKeys(record: Any?, target: Array<out Any>, index: Int): Int {
+    override fun extractKeys(
+        record: Any?,
+        target: Array<out Any>,
+        index: Int,
+    ): Int {
         var localIndex = index
         keyPositions.zip(comparators).forEach { (position, comparator) ->
             localIndex += comparator.extractKeys(position, target, localIndex)
