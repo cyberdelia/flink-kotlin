@@ -5,7 +5,7 @@ plugins {
     signing
 
     id("org.jmailen.kotlinter") version "4.0.0"
-    id("org.jetbrains.dokka") version "1.9.0"
+    id("org.jetbrains.dokka") version "1.9.10"
 }
 
 group = "com.lapanthere"
