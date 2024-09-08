@@ -6,8 +6,7 @@ import org.apache.flink.core.memory.DataInputView
 import org.apache.flink.core.memory.DataOutputView
 import org.apache.flink.util.InstantiationUtil
 
-public class DataClassTypeSerializerSnapshot<T : Any> :
-    CompositeTypeSerializerSnapshot<T, DataClassTypeSerializer<T>> {
+public class DataClassTypeSerializerSnapshot<T : Any> : CompositeTypeSerializerSnapshot<T, DataClassTypeSerializer<T>> {
     private var type: Class<T>? = null
 
     public constructor() : super(DataClassTypeSerializer::class.java)

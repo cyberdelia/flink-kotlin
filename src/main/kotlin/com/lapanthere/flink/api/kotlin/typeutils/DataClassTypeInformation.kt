@@ -34,8 +34,10 @@ public class DataClassTypeInformation<T : Any>(
     public override fun equals(other: Any?): Boolean =
         when (other) {
             is DataClassTypeInformation<*> ->
-                other.canEqual(this) && super.equals(other) &&
-                    genericParameters == other.genericParameters && fieldNames.contentEquals(other.fieldNames)
+                other.canEqual(this) &&
+                    super.equals(other) &&
+                    genericParameters == other.genericParameters &&
+                    fieldNames.contentEquals(other.fieldNames)
             else -> false
         }
 

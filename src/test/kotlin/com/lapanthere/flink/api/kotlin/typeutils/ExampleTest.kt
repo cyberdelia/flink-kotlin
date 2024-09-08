@@ -13,7 +13,8 @@ internal class ExampleTest {
         @JvmStatic
         private val cluster =
             MiniClusterWithClientResource(
-                MiniClusterResourceConfiguration.Builder()
+                MiniClusterResourceConfiguration
+                    .Builder()
                     .setNumberSlotsPerTaskManager(2)
                     .setNumberTaskManagers(1)
                     .build(),
