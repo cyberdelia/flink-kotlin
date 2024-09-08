@@ -60,9 +60,10 @@ public class DataClassTypeSerializer<T : Any>(
             null
         } else {
             createInstance(
-                fieldSerializers.mapIndexed { i, serializer ->
-                    serializer.copy(from.component(i))
-                }.toTypedArray(),
+                fieldSerializers
+                    .mapIndexed { i, serializer ->
+                        serializer.copy(from.component(i))
+                    }.toTypedArray(),
             )
         }
 }
