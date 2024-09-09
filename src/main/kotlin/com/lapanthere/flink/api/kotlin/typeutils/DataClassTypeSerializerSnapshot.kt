@@ -2,6 +2,7 @@ package com.lapanthere.flink.api.kotlin.typeutils
 
 import org.apache.flink.api.common.typeutils.CompositeTypeSerializerSnapshot
 import org.apache.flink.api.common.typeutils.TypeSerializer
+import org.apache.flink.api.common.typeutils.TypeSerializerSnapshot
 import org.apache.flink.core.memory.DataInputView
 import org.apache.flink.core.memory.DataOutputView
 import org.apache.flink.util.InstantiationUtil
@@ -9,9 +10,9 @@ import org.apache.flink.util.InstantiationUtil
 public class DataClassTypeSerializerSnapshot<T : Any> : CompositeTypeSerializerSnapshot<T, DataClassTypeSerializer<T>> {
     private var type: Class<T>? = null
 
-    public constructor() : super(DataClassTypeSerializer::class.java)
+    public constructor() : super()
 
-    public constructor(type: Class<T>) : super(DataClassTypeSerializer::class.java) {
+    public constructor(type: Class<T>) : super() {
         this.type = type
     }
 
@@ -39,8 +40,16 @@ public class DataClassTypeSerializerSnapshot<T : Any> : CompositeTypeSerializerS
         type = InstantiationUtil.resolveClassByName(`in`, userCodeClassLoader)
     }
 
+    @Deprecated("Deprecated in Java.")
     override fun resolveOuterSchemaCompatibility(newSerializer: DataClassTypeSerializer<T>): OuterSchemaCompatibility =
         if (type == newSerializer.tupleClass) {
+            OuterSchemaCompatibility.COMPATIBLE_AS_IS
+        } else {
+            OuterSchemaCompatibility.INCOMPATIBLE
+        }
+
+    override fun resolveOuterSchemaCompatibility(oldSerializerSnapshot: TypeSerializerSnapshot<T>): OuterSchemaCompatibility =
+        if (oldSerializerSnapshot is DataClassTypeSerializerSnapshot) {
             OuterSchemaCompatibility.COMPATIBLE_AS_IS
         } else {
             OuterSchemaCompatibility.INCOMPATIBLE
