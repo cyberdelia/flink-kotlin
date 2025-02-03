@@ -27,6 +27,16 @@ dependencies {
     testImplementation("org.junit.vintage:junit-vintage-engine")
 }
 
+tasks.named<Test>("test") {
+    useJUnitPlatform()
+
+    maxHeapSize = "1G"
+
+    testLogging {
+        events("passed")
+    }
+}
+
 tasks.register<Jar>("sourcesJar") {
     archiveClassifier.set("sources")
     from(sourceSets.main.get().allSource)
@@ -36,6 +46,16 @@ tasks.register<Jar>("javadocJar") {
     group = JavaBasePlugin.DOCUMENTATION_GROUP
     archiveClassifier.set("javadoc")
     from(tasks.named("dokkaHtml"))
+}
+
+dokka {
+    moduleName.set("flink-kotlin")
+    dokkaSourceSets.main {
+        sourceLink {
+            localDirectory.set(file("src/main/kotlin"))
+            remoteUrl("https://github.com/cyberdelia/flink-kotlin")
+        }
+    }
 }
 
 kotlin {

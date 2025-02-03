@@ -30,6 +30,7 @@ data class Basic(
     val field: Int,
 )
 
+@TypeInfo(DataClassTypeInfoFactory::class)
 data class ParameterizedClass<T>(
     val name: String,
     val field: T,

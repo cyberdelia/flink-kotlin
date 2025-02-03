@@ -2,6 +2,7 @@ package com.lapanthere.flink.api.kotlin.typeutils
 
 import org.apache.flink.api.common.ExecutionConfig
 import org.apache.flink.api.common.operators.Keys
+import org.apache.flink.api.common.serialization.SerializerConfig
 import org.apache.flink.api.common.typeinfo.TypeInformation
 import org.apache.flink.api.common.typeutils.CompositeType
 import org.apache.flink.api.common.typeutils.TypeComparator
@@ -46,11 +47,15 @@ public class DataClassTypeInformation<T : Any>(
     public override fun hashCode(): Int =
         31 * (31 * super.hashCode() + fieldNames.contentHashCode()) + genericParameters.values.toTypedArray().contentHashCode()
 
+    @Deprecated("Deprecated in Java")
     override fun createSerializer(config: ExecutionConfig): TypeSerializer<T> =
         DataClassTypeSerializer(
             klass,
             types.take(arity).map { it.createSerializer(config) }.toTypedArray(),
         )
+
+    override fun createSerializer(config: SerializerConfig?): TypeSerializer<T> =
+        DataClassTypeSerializer(klass, types.take(arity).map { it.createSerializer(config) }.toTypedArray())
 
     override fun createTypeComparatorBuilder(): TypeComparatorBuilder<T> = DataClassTypeComparatorBuilder()
 
