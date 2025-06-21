@@ -86,4 +86,3 @@ public class SetTypeSerializer<T>(
         return elementSerializer.hashCode()
     }
 }
-
