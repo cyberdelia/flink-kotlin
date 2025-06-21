@@ -64,3 +64,12 @@ internal class TripleTypeSerializerTest : AbstractDataClassTypeSerializerTest<Tr
             Triple("Super", "Mario", 2),
         )
 }
+
+internal class SetTypeSerializerTest : AbstractDataClassTypeSerializerTest<Set<String>>() {
+    override val typeInformation: TypeInformation<Set<String>> = createTypeInformation()
+
+    override fun getTestData(): Array<Set<String>> =
+        arrayOf(
+            setOf("Hello", "World"),
+        )
+}
