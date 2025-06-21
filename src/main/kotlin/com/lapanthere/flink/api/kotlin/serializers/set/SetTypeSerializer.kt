@@ -10,16 +10,17 @@ import org.apache.flink.core.memory.DataOutputView
  * Inspired from [org.apache.flink.api.common.typeutils.base.ListSerializer]
  */
 public class SetTypeSerializer<T>(
-    public val elementSerializer: TypeSerializer<T>
+    public val elementSerializer: TypeSerializer<T>,
 ) : TypeSerializer<Set<T>>() {
     override fun isImmutableType(): Boolean = false
 
     override fun duplicate(): TypeSerializer<Set<T>> {
         val duplicateElement = elementSerializer.duplicate()
-        return if (duplicateElement === elementSerializer)
+        return if (duplicateElement === elementSerializer) {
             this
-        else
+        } else {
             SetTypeSerializer<T>(duplicateElement)
+        }
     }
 
     override fun createInstance(): Set<T> = emptySet()
@@ -35,13 +36,19 @@ public class SetTypeSerializer<T>(
         }
     }
 
-    override fun copy(from: Set<T>, reuse: Set<T>): Set<T> = copy(from)
+    override fun copy(
+        from: Set<T>,
+        reuse: Set<T>,
+    ): Set<T> = copy(from)
 
     override fun getLength(): Int = -1 // var length
 
-    override fun serialize(record: Set<T>, target: DataOutputView) {
+    override fun serialize(
+        record: Set<T>,
+        target: DataOutputView,
+    ) {
         val size = record.size
-        target.writeInt(size);
+        target.writeInt(size)
 
         for (element in record) {
             elementSerializer.serialize(element, target)
@@ -57,11 +64,15 @@ public class SetTypeSerializer<T>(
         }
     }
 
-    override fun deserialize(reuse: Set<T>, source: DataInputView): Set<T> {
-        return deserialize(source)
-    }
+    override fun deserialize(
+        reuse: Set<T>,
+        source: DataInputView,
+    ): Set<T> = deserialize(source)
 
-    override fun copy(source: DataInputView, target: DataOutputView) {
+    override fun copy(
+        source: DataInputView,
+        target: DataOutputView,
+    ) {
         val size = source.readInt()
         target.writeInt(size)
         repeat(size) {
@@ -69,9 +80,7 @@ public class SetTypeSerializer<T>(
         }
     }
 
-    override fun snapshotConfiguration(): TypeSerializerSnapshot<Set<T>> {
-        return SetSerializerSnapshot(this)
-    }
+    override fun snapshotConfiguration(): TypeSerializerSnapshot<Set<T>> = SetSerializerSnapshot(this)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -82,7 +91,5 @@ public class SetTypeSerializer<T>(
         return elementSerializer == other.elementSerializer
     }
 
-    override fun hashCode(): Int {
-        return elementSerializer.hashCode()
-    }
+    override fun hashCode(): Int = elementSerializer.hashCode()
 }
