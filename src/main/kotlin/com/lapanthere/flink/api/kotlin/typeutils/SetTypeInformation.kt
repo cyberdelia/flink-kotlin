@@ -18,11 +18,7 @@ public class SetTypeInformation<T>(private val elementTypeInfo: TypeInformation<
 
     override fun getArity(): Int = 0
 
-    override fun getTotalFields(): Int {
-        // similar as arrays, the lists are "opaque" to the direct field addressing logic
-        // since the list's elements are not addressable, we do not expose them
-        return 1;
-    }
+    override fun getTotalFields(): Int = 1
 
     @Suppress("UNCHECKED_CAST")
     override fun getTypeClass(): Class<Set<T>> {
