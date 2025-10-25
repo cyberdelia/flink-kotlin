@@ -69,3 +69,4 @@ package/tmp
 
 .DS_Store
 /.jqwik-database
+.direnv/
