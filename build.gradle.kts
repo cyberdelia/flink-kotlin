@@ -2,7 +2,6 @@ plugins {
     kotlin("jvm") version "2.3.0"
     `java-library`
     `maven-publish`
-    signing
 
     id("org.jmailen.kotlinter") version "5.3.0"
     id("org.jetbrains.dokka") version "2.1.0"
@@ -116,11 +115,11 @@ publishing {
     }
 }
 
-signing {
-    useInMemoryPgpKeys(
-        System.getenv("GPG_KEY_ID"),
-        System.getenv("GPG_PRIVATE_KEY"),
-        System.getenv("GPG_PASSPHRASE")
-    )
-    sign(publishing.publications)
-}
+// signing {
+//     useInMemoryPgpKeys(
+//         System.getenv("GPG_KEY_ID"),
+//         System.getenv("GPG_PRIVATE_KEY"),
+//         System.getenv("GPG_PASSPHRASE")
+//     )
+//     sign(publishing.publications)
+// }
