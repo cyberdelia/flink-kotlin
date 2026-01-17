@@ -34,12 +34,16 @@ public class DataClassTypeInformation<T : Any>(
 
     public override fun equals(other: Any?): Boolean =
         when (other) {
-            is DataClassTypeInformation<*> ->
+            is DataClassTypeInformation<*> -> {
                 other.canEqual(this) &&
                     super.equals(other) &&
                     genericParameters == other.genericParameters &&
                     fieldNames.contentEquals(other.fieldNames)
-            else -> false
+            }
+
+            else -> {
+                false
+            }
         }
 
     public override fun canEqual(obj: Any): Boolean = obj is DataClassTypeInformation<*>
@@ -81,7 +85,9 @@ public class DataClassTypeInformation<T : Any>(
                         keyPosition += fieldType.totalFields - 1
                     }
 
-                    else -> result.add(FlatFieldDescriptor(offset + keyPosition, fieldType))
+                    else -> {
+                        result.add(FlatFieldDescriptor(offset + keyPosition, fieldType))
+                    }
                 }
             }
         } else {
@@ -119,6 +125,7 @@ public class DataClassTypeInformation<T : Any>(
                     } else if (field == fieldNames[index]) {
                         when (val fieldType = fieldTypes[index]) {
                             is CompositeType<*> -> fieldType.getFlatFields(tail, pos, result)
+
                             else -> throw InvalidFieldReferenceException(
                                 """Nested field expression "$tail" not possible on atomic type "$fieldType".""",
                             )
@@ -155,6 +162,7 @@ public class DataClassTypeInformation<T : Any>(
                 } else {
                     when (fieldType) {
                         is CompositeType<*> -> fieldType.getTypeAt(i)
+
                         else -> throw InvalidFieldReferenceException(
                             """Nested field expression "$tail" not possible on atomic type "$fieldType".""",
                         )

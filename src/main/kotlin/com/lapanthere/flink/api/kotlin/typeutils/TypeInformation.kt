@@ -28,18 +28,24 @@ public fun createTypeInformation(type: KType): TypeInformation<*> {
                 fields.map { it.name!! }.toTypedArray(),
             )
         }
+
         klass.isSubclassOf(Map::class) -> {
             val (key, value) = type.arguments.map { it.type ?: Any::class.starProjectedType }
             MapTypeInfo(createTypeInformation(key), createTypeInformation(value))
         }
+
         klass.isSubclassOf(Set::class) -> {
             val (value) = type.arguments.map { it.type ?: Any::class.starProjectedType }
             SetTypeInformation(createTypeInformation(value))
         }
+
         klass.isSubclassOf(Collection::class) -> {
             ListTypeInfo(createTypeInformation(type.arguments.map { it.type ?: Any::class.starProjectedType }.first()))
         }
-        else -> TypeExtractor.createTypeInfo(type.javaType)
+
+        else -> {
+            TypeExtractor.createTypeInfo(type.javaType)
+        }
     }
 }
 
