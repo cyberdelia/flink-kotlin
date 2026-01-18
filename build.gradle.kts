@@ -2,6 +2,7 @@ plugins {
     kotlin("jvm") version "2.3.0"
     `java-library`
     `maven-publish`
+    signing
 
     id("org.jmailen.kotlinter") version "5.3.0"
     id("org.jetbrains.dokka") version "2.1.0"
@@ -63,22 +64,26 @@ kotlin {
 
 publishing {
     repositories {
-        maven {
-            name = "Github"
-            url = uri("https://maven.pkg.github.com/cyberdelia/flink-kotlin")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
+        if (System.getenv("GITHUB_ACTOR") != null && System.getenv("GITHUB_TOKEN") != null) {
+            maven {
+                name = "Github"
+                url = uri("https://maven.pkg.github.com/cyberdelia/flink-kotlin")
+                credentials {
+                    username = System.getenv("GITHUB_ACTOR")
+                    password = System.getenv("GITHUB_TOKEN")
+                }
             }
         }
-        // maven {
-        //     name = "OSSRH"
-        //     url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-        //     credentials {
-        //         username = System.getenv("OSSRH_USERNAME")
-        //         password = System.getenv("OSSRH_PASSWORD")
-        //     }
-        // }
+        if (System.getenv("OSSRH_USERNAME") != null && System.getenv("OSSRH_PASSWORD") != null) {
+            maven {
+                name = "OSSRH"
+                url = uri("https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/")
+                credentials {
+                    username = System.getenv("OSSRH_USERNAME")
+                    password = System.getenv("OSSRH_PASSWORD")
+                }
+            }
+        }
     }
 
     publications {
@@ -115,11 +120,10 @@ publishing {
     }
 }
 
-// signing {
-//     useInMemoryPgpKeys(
-//         System.getenv("GPG_KEY_ID"),
-//         System.getenv("GPG_PRIVATE_KEY"),
-//         System.getenv("GPG_PASSPHRASE")
-//     )
-//     sign(publishing.publications)
-// }
+signing {
+    useInMemoryPgpKeys(
+        System.getenv("GPG_PRIVATE_KEY"),
+        System.getenv("GPG_PASSPHRASE")
+    )
+    sign(publishing.publications)
+}
