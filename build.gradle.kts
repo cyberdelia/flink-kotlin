@@ -1,3 +1,7 @@
+import java.net.HttpURLConnection
+import java.net.URI
+import java.util.Base64
+
 plugins {
     kotlin("jvm") version "2.3.0"
     `java-library`
@@ -46,6 +50,30 @@ tasks.register<Jar>("javadocJar") {
     group = JavaBasePlugin.DOCUMENTATION_GROUP
     archiveClassifier.set("javadoc")
     from(tasks.named("dokkaGenerate"))
+}
+
+tasks.withType<PublishToMavenRepository> {
+    if (name == "Github") {
+        return@withType
+    }
+
+    val namespace = "com.lapanthere"
+    val url = URI("https://ossrh-staging-api.central.sonatype.com/manual/upload/defaultRepository/$namespace").toURL()
+    val token = Base64.getEncoder().encodeToString("${System.getenv("OSSRH_USERNAME")}:${System.getenv("OSSRH_PASSWORD")}".toByteArray())
+
+    doLast("closeOssrhRepository") {
+        val connection = (url.openConnection() as HttpURLConnection).apply {
+            requestMethod = "POST"
+            setRequestProperty("Authorization", "Bearer $token")
+            setRequestProperty("User-Agent", "Gradle/${project.gradle.gradleVersion}")
+        }
+
+        if (connection.responseCode != 200) {
+            throw GradleException("Failed to close staging repository: ${connection.responseCode} ${connection.responseMessage}")
+        }
+
+        connection.disconnect()
+    }
 }
 
 dokka {
