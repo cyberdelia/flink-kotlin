@@ -1,6 +1,7 @@
 import java.net.HttpURLConnection
 import java.net.URI
 import java.util.Base64
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     kotlin("jvm") version "2.3.20"
@@ -89,6 +90,15 @@ dokka {
 
 kotlin {
     explicitApi()
+
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 publishing {
