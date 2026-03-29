@@ -55,7 +55,7 @@ tasks.register<Jar>("javadocJar") {
 }
 
 tasks.withType<PublishToMavenRepository> {
-    if (repository.name != "OSSRH") {
+    if (!name.endsWith("ToOSSRHRepository")) {
         return@withType
     }
 
