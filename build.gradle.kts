@@ -55,13 +55,20 @@ tasks.register<Jar>("javadocJar") {
 }
 
 tasks.withType<PublishToMavenRepository> {
-    if (name == "Github") {
+    if (repository.name != "OSSRH") {
+        return@withType
+    }
+
+    val ossrhUsername = System.getenv("OSSRH_USERNAME")
+    val ossrhPassword = System.getenv("OSSRH_PASSWORD")
+
+    if (ossrhUsername.isNullOrBlank() || ossrhPassword.isNullOrBlank()) {
         return@withType
     }
 
     val namespace = "com.lapanthere"
     val url = URI("https://ossrh-staging-api.central.sonatype.com/manual/upload/defaultRepository/$namespace").toURL()
-    val token = Base64.getEncoder().encodeToString("${System.getenv("OSSRH_USERNAME")}:${System.getenv("OSSRH_PASSWORD")}".toByteArray())
+    val token = Base64.getEncoder().encodeToString("$ossrhUsername:$ossrhPassword".toByteArray())
 
     doLast("closeOssrhRepository") {
         val connection = (url.openConnection() as HttpURLConnection).apply {
