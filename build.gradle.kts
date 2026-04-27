@@ -27,7 +27,7 @@ dependencies {
 
     testImplementation("org.apache.flink:flink-test-utils:$flinkVersion")
     testImplementation("org.apache.flink:flink-core:$flinkVersion:tests")
-    testImplementation(platform("org.junit:junit-bom:5.14.3"))
+    testImplementation(platform("org.junit:junit-bom:5.14.4"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.junit.vintage:junit-vintage-engine")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
