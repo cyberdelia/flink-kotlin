@@ -9,7 +9,7 @@ plugins {
     `maven-publish`
     signing
 
-    id("org.jmailen.kotlinter") version "5.5.0"
+    id("org.jmailen.kotlinter") version "5.6.0"
     id("org.jetbrains.dokka") version "2.2.0"
 }
 
