@@ -8,7 +8,7 @@ import org.apache.flink.api.common.typeutils.TypeSerializer
 internal abstract class AbstractDataClassTypeSerializerTest<T : Any> : SerializerTestBase<T>() {
     protected abstract val typeInformation: TypeInformation<T>
 
-    override fun createSerializer(): TypeSerializer<T> = typeInformation.createSerializer(ExecutionConfig())
+    override fun createSerializer(): TypeSerializer<T> = typeInformation.createSerializer(ExecutionConfig().serializerConfig)
 
     override fun getLength(): Int = -1
 
