@@ -25,7 +25,7 @@ internal class DataClassTypeComparatorTest : ComparatorTestBase<DataClass>() {
         )
     }
 
-    override fun createSerializer(): TypeSerializer<DataClass> = type.createSerializer(ExecutionConfig())
+    override fun createSerializer(): TypeSerializer<DataClass> = type.createSerializer(ExecutionConfig().serializerConfig)
 
     override fun getSortedTestData(): Array<DataClass> =
         arrayOf(

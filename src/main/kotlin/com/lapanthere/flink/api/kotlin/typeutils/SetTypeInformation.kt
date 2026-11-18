@@ -1,7 +1,6 @@
 package com.lapanthere.flink.api.kotlin.typeutils
 
 import com.lapanthere.flink.api.kotlin.serializers.set.SetTypeSerializer
-import org.apache.flink.api.common.ExecutionConfig
 import org.apache.flink.api.common.serialization.SerializerConfig
 import org.apache.flink.api.common.typeinfo.TypeInformation
 import org.apache.flink.api.common.typeutils.TypeSerializer
@@ -25,9 +24,6 @@ public class SetTypeInformation<T>(
     override fun getTypeClass(): Class<Set<T>> = Set::class.java as Class<Set<T>>
 
     override fun isKeyType(): Boolean = false
-
-    @Deprecated("Deprecated in Java")
-    override fun createSerializer(config: ExecutionConfig?): TypeSerializer<Set<T>> = createSerializer(config?.serializerConfig)
 
     override fun createSerializer(config: SerializerConfig?): TypeSerializer<Set<T>> {
         val elementSerializer = elementTypeInfo.createSerializer(config)

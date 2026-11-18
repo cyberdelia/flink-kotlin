@@ -51,13 +51,6 @@ public class DataClassTypeInformation<T : Any>(
     public override fun hashCode(): Int =
         31 * (31 * super.hashCode() + fieldNames.contentHashCode()) + genericParameters.values.toTypedArray().contentHashCode()
 
-    @Deprecated("Deprecated in Java")
-    override fun createSerializer(config: ExecutionConfig): TypeSerializer<T> =
-        DataClassTypeSerializer(
-            klass,
-            types.take(arity).map { it.createSerializer(config) }.toTypedArray(),
-        )
-
     override fun createSerializer(config: SerializerConfig?): TypeSerializer<T> =
         DataClassTypeSerializer(klass, types.take(arity).map { it.createSerializer(config) }.toTypedArray())
 
@@ -193,7 +186,7 @@ public class DataClassTypeInformation<T : Any>(
             DataClassTypeComparator(
                 logicalKeyFields.toIntArray(),
                 fieldComparators.toTypedArray(),
-                types.take(logicalKeyFields.max() + 1).map { it.createSerializer(config) }.toTypedArray(),
+                types.take(logicalKeyFields.max() + 1).map { it.createSerializer(config.serializerConfig) }.toTypedArray(),
             )
     }
 }
