@@ -2,7 +2,7 @@
 
 This package provides type information and
 specialized [type serializers](https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/dev/datastream/fault-tolerance/serialization/types_serialization/)
-for kotlin data classes (including `Pair` and `Triple`), as well as for Kotlin `Map` and `Collection` types.
+for kotlin data classes (including `Pair` and `Triple`), Kotlin `Map`, `Set` and `Collection` types, and Java `Optional`.
 
 ## Installation
 
@@ -18,8 +18,7 @@ implementation("com.lapanthere:flink-kotlin:0.1.0")
 
 ### TypeInformation
 
-Using the `createTypeInformation` that will return a Kotlin friendly `TypeInformation` for data classes, collections,
-maps, etc:
+Using the `createTypeInformation` that will return a Kotlin friendly `TypeInformation` for data classes, collections, maps, sets, Java `Optional`, etc:
 
 ```kotlin
 dataStream.process(
@@ -53,5 +52,5 @@ Schema evolution for data classes follow this set of rules:
 2. New fields can be added. The new field will be initialized to the default value for its type, as defined by Java.
 3. Declared fields types cannot change.
 4. Class name of type cannot change, including the namespace of the class.
-5. Null fields are not supported.
+5. Null fields are not supported (however, Java `Optional` can be used to model absence when needed).
 
