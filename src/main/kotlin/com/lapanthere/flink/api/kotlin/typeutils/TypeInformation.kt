@@ -4,6 +4,7 @@ import org.apache.flink.api.common.typeinfo.TypeInformation
 import org.apache.flink.api.java.typeutils.ListTypeInfo
 import org.apache.flink.api.java.typeutils.MapTypeInfo
 import org.apache.flink.api.java.typeutils.TypeExtractor
+import java.util.Optional
 import kotlin.reflect.KType
 import kotlin.reflect.full.isSubclassOf
 import kotlin.reflect.full.primaryConstructor
@@ -41,6 +42,11 @@ public fun createTypeInformation(type: KType): TypeInformation<*> {
 
         klass.isSubclassOf(Collection::class) -> {
             ListTypeInfo(createTypeInformation(type.arguments.map { it.type ?: Any::class.starProjectedType }.first()))
+        }
+
+        klass == Optional::class -> {
+            val (value) = type.arguments.map { it.type ?: Any::class.starProjectedType }
+            OptionalTypeInformation(createTypeInformation(value))
         }
 
         else -> {
