@@ -49,7 +49,10 @@ public class DataClassTypeInformation<T : Any>(
     public override fun canEqual(obj: Any): Boolean = obj is DataClassTypeInformation<*>
 
     public override fun hashCode(): Int =
-        31 * (31 * super.hashCode() + fieldNames.contentHashCode()) + genericParameters.values.toTypedArray().contentHashCode()
+        31 * (31 * super.hashCode() + fieldNames.contentHashCode()) +
+            genericParameters.values
+                .toTypedArray()
+                .contentHashCode()
 
     override fun createSerializer(config: SerializerConfig?): TypeSerializer<T> =
         DataClassTypeSerializer(klass, types.take(arity).map { it.createSerializer(config) }.toTypedArray())
@@ -132,7 +135,7 @@ public class DataClassTypeInformation<T : Any>(
         }
     }
 
-    override fun <X : Any?> getTypeAt(fieldExpression: String): TypeInformation<X> {
+    override fun <X> getTypeAt(fieldExpression: String): TypeInformation<X> {
         val match =
             PATTERN_NESTED_FIELDS.matchEntire(fieldExpression)
                 ?: if (fieldExpression.startsWith(Keys.ExpressionKeys.SELECT_ALL_CHAR)) {
@@ -186,7 +189,10 @@ public class DataClassTypeInformation<T : Any>(
             DataClassTypeComparator(
                 logicalKeyFields.toIntArray(),
                 fieldComparators.toTypedArray(),
-                types.take(logicalKeyFields.max() + 1).map { it.createSerializer(config.serializerConfig) }.toTypedArray(),
+                types
+                    .take(logicalKeyFields.max() + 1)
+                    .map { it.createSerializer(config.serializerConfig) }
+                    .toTypedArray(),
             )
     }
 }
