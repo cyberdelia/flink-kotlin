@@ -1,17 +1,22 @@
 {
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-  outputs = { nixpkgs, ... }:
+  outputs =
+    { nixpkgs, ... }:
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
     in
     {
-      devShells = forAllSystems (system:
+      devShells = forAllSystems (
+        system:
         let
           pkgs = import nixpkgs { inherit system; };
         in
         {
           default = pkgs.mkShell {
-            buildInputs = [ pkgs.kotlin ];
+            buildInputs = [
+              pkgs.kotlin
+              pkgs.gradle_9
+            ];
           };
         }
       );
